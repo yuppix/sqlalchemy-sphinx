@@ -1,6 +1,7 @@
 """ Constructs for SphinxQL generation"""
 
 from sqlalchemy.sql import expression, func
+from sqlalchemy.sql.base import _generative
 
 __all__ = ("Select", "Replace", "select", "replace")
 
@@ -47,7 +48,7 @@ class Select(expression.Select):
         columns = columns + [func.weight().label("__weight__")]
         return super(Select, self).with_only_columns(columns)
 
-    @expression._generative
+    @_generative
     def match(self, query):
         """ Provide full text query for index
 
@@ -58,11 +59,11 @@ class Select(expression.Select):
         """
         self.append_whereclause(MatchClause(query))
 
-    @expression._generative
+    @_generative
     def within_group_order_by(self, *clauses):
         self.append_within_group_order_by(*clauses)
 
-    @expression._generative
+    @_generative
     def options(self, *args, **kwargs):
         """ Provide options to execute query
 
