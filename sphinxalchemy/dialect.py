@@ -3,6 +3,7 @@
 from sqlalchemy.engine import default
 from sqlalchemy.sql import compiler
 from sqlalchemy.sql import expression as sql
+from sqlalchemy.sql.elements import _generated_label
 from sqlalchemy import util, exc
 
 __all__ = ("SphinxDialect",)
@@ -44,14 +45,14 @@ class SphinxCompiler(compiler.SQLCompiler):
                 " clause without LIMIT")
         return text
 
-    def visit_column(self, column, result_map=None, **kwargs):
+    def visit_column(self, column, result_map=None, include_table=True, **kwargs):
         name = column.name
         if name is None:
             raise exc.CompileError("Cannot compile Column object until "
                                    "it's 'name' is assigned.")
 
         is_literal = column.is_literal
-        if not is_literal and isinstance(name, sql._generated_label):
+        if not is_literal and isinstance(name, _generated_label):
             name = self._truncated_identifier("colident", name)
 
         if result_map is not None:
@@ -68,9 +69,10 @@ class SphinxCompiler(compiler.SQLCompiler):
         return "MATCH('%s')" % match.query.replace("'", "\\'")
 
     def visit_select(self, select, asfrom=False, parens=True,
-                            iswrapper=False, fromhints=None,
-                            compound_index=1, **kwargs):
-
+        iswrapper=False, fromhints=None,
+        compound_index=1, force_result_map=False,
+        nested_join_translation=False, **kwargs
+    ):
         entry = self.stack and self.stack[-1] or {}
 
         existingfroms = entry.get('from', None)
@@ -95,10 +97,7 @@ class SphinxCompiler(compiler.SQLCompiler):
         # the actual list of columns to print in the SELECT column list.
         inner_columns = [
             c for c in [
-                self.label_select_column(select, co, asfrom=asfrom).\
-                    _compiler_dispatch(self,
-                        within_columns_clause=True,
-                        **column_clause_args)
+                self._label_select_column(select, co, True, asfrom, {})
                 for co in util.unique_list(select.inner_columns)
             ]
             if c is not None
@@ -241,6 +240,10 @@ class SphinxDialect(default.DefaultDialect):
 
     name = "sphinx"
     statement_compiler = SphinxCompiler
+
+    #TODO HACK : Prevent SQLalchemy to send the request
+    # 'SELECT 'X' as some_label;' as it is not supported by Sphinx
+    description_encoding = None
 
     def _check_unicode_returns(self, connection):
         return True

@@ -13,7 +13,7 @@ setup(
     packages=find_packages(exclude=["ez_setup", "examples", "tests"]),
     zip_safe=False,
     install_requires=[
-        "sqlalchemy < 0.8a",
+        "sqlalchemy > 0.9",
     ],
     entry_points="""
     [sqlalchemy.dialects]
