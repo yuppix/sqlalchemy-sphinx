@@ -18,6 +18,7 @@ setup(
     entry_points="""
     [sqlalchemy.dialects]
     sphinx         = sphinxalchemy.mysqldb:Dialect
+    sphinx.cymysql = sphinxalchemy.cymysql:Dialect
     sphinx.mysqldb = sphinxalchemy.mysqldb:Dialect
     sphinx.mysqlconnector = sphinxalchemy.mysqlconnector:Dialect
     """)
