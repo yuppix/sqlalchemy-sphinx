@@ -1,0 +1,7 @@
+*.pyc
+env/
+.cache/
+.coverage
+.tox/
+.eggs/
+*.DS_Store
