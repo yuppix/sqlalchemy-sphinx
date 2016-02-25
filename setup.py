@@ -27,7 +27,7 @@ setup(
     name="sqlalchemy_sphinx",
     version="0.8.1",
     description="SQLAlchemy extension for dealing with SphinxQL",
-    long_description=open("README.md", "r").read(),
+    long_description=open("README.rst", "r").read(),
     author="SET by Conversant",
     author_email="adrielvelazquez@gmail.com",
     packages=['sqlalchemy_sphinx'],
