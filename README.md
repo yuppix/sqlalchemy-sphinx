@@ -45,18 +45,19 @@ After the model is created we can run queries against the model:
 
 ```python
 query = session.query(MockSphinxModel).limit(100)
-sql_text = query.statement.compile(sphinx_engine).string
-# 'SELECT name, id, country \nFROM mock_table\n LIMIT 0, 100'
+# 'SELECT name, id, country FROM mock_table LIMIT 0, 100'
 ```
 
 
 We can also do matching
 
 ```python
-query = session.query(MockSphinxModel.id)
-query = query.filter(MockSphinxModel.name.match("adriel"), MockSphinxModel.country.match("US"))
-sql_text = query.statement.compile(sphinx_engine).string
-assert sql_text == "SELECT id \nFROM mock_table \nWHERE MATCH('(@name adriel) (@country US)')"
+base_query = session.query(MockSphinxModel.id)
+query = base_query.filter(MockSphinxModel.country.match("US"))
+# "SELECT id FROM mock_table WHERE MATCH('(@country US)')"
+
+query = base_query.filter(MockSphinxModel.name.match("adriel"), MockSphinxModel.country.match("US"))
+# "SELECT id FROM mock_table WHERE MATCH('(@name adriel) (@country US)')"
 ```
 
 Options:
@@ -64,11 +65,9 @@ Options:
 ```python
 query = session.query(MockSphinxModel.id)
 query = query.filter(func.options(MockSphinxModel.field_weights == ["title=10", "body=3"]))
-sql_text = query.statement.compile(sphinx_engine).string
-assert sql_text == 'SELECT id \nFROM mock_table OPTION field_weights=(title=10, body=3)'
+# 'SELECT id FROM mock_table OPTION field_weights=(title=10, body=3)'
 
 query = session.query(MockSphinxModel.id)
 query = query.filter(MockSphinxModel.country.match("US"), func.options(MockSphinxModel.max_matches == 1))
-sql_text = query.statement.compile(sphinx_engine).string
-assert sql_text == "SELECT id \nFROM mock_table \nWHERE MATCH('(@country US)') OPTION max_matches=1"
+# "SELECT id FROM mock_table WHERE MATCH('(@country US)') OPTION max_matches=1"
 ```
