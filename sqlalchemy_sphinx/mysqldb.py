@@ -20,24 +20,6 @@ class DBAPIShim(object):
 
 class Dialect(SphinxDialect, mysqldb_dialect.MySQLDialect_mysqldb):
 
-    def _get_default_schema_name(self, connection):
-        pass
-
-    def _detect_charset(self, connection):
-        pass
-
-    def _detect_casing(self, connection):
-        pass
-
-    def _detect_collations(self, connection):
-        pass
-
-    def _detect_ansiquotes(self, connection):
-        self._server_ansiquotes = False
-
-    def get_isolation_level(self, connection):
-        pass
-
     @classmethod
     def dbapi(cls):
         return DBAPIShim()
