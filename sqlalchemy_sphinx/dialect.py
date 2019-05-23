@@ -15,7 +15,7 @@ class SphinxDialect(default.DefaultDialect):
     description_encoding = None
 
     def _get_server_version_info(self, connection):
-        pass
+        return (0, '')
     
     def _get_default_schema_name(self, connection):
         pass
