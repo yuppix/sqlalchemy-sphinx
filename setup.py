@@ -12,9 +12,9 @@ setup(
     ],
     entry_points={
      'sqlalchemy.dialects': [
-          'sphinx = sqlalchemy_sphinx.mysqldb:Dialect',
-          'sphinx.cymysql = sqlalchemy_sphinx.cymysql:Dialect',
-          'sphinx.mysqldb = sqlalchemy_sphinx.mysqldb:Dialect'
+          'sphinx = sqlalchemy-sphinxql-connector.mysqldb:Dialect',
+          'sphinx.cymysql = sqlalchemy-sphinxql-connector.cymysql:Dialect',
+          'sphinx.mysqldb = sqlalchemy-sphinxql-connector.mysqldb:Dialect'
           ]
     }
 )
