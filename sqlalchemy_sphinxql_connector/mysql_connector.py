@@ -1,6 +1,6 @@
-""" MySQLdb connector"""
+""" mysql-connector connector"""
 
-import mysql
+import mysql.connector
 from mysql.connector import (connection)
 from sqlalchemy.dialects.mysql import mysqlconnector
 from sqlalchemy_sphinxql_connector.dialect import SphinxDialect
@@ -14,7 +14,7 @@ class DBAPIShim(object):
         return connection.MySQLConnection(*args, **kwargs)
 
     def __getattr__(self, name):
-        return getattr(mysql, name)
+        return getattr(mysql.connector, name)
 
 
 class Dialect(SphinxDialect, mysqlconnector.MySQLDialect_mysqlconnector):
