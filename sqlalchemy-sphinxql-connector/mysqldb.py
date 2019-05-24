@@ -1,10 +1,8 @@
 """ MySQLdb connector"""
 
-from __future__ import absolute_import
-
 import MySQLdb
 from sqlalchemy.dialects.mysql import mysqldb as mysqldb_dialect
-from sqlalchemy_sphinx.dialect import SphinxDialect
+from sqlalchemy-sphinxql-connector.dialect import SphinxDialect
 
 __all__ = ("Dialect",)
 
