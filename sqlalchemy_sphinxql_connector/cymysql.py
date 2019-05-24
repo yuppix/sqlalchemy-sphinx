@@ -3,7 +3,7 @@
 import cymysql
 from cymysql.connections import Connection
 from sqlalchemy.dialects.mysql import cymysql as cymysql_dialect
-from sqlalchemy-sphinxql-connector.dialect import SphinxDialect
+from sqlalchemy_sphinxql_connector.dialect import SphinxDialect
 
 __all__ = ("Dialect",)
 

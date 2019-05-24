@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="sqlalchemy-sphinxql-connector",
-    version="0.1.0",
+    version="0.1.1",
     description="SQLAlchemy extension for dealing with SphinxQL",
     long_description=open("README.rst", "r").read(),
     packages=['sqlalchemy-sphinxql-connector'],
@@ -12,9 +12,9 @@ setup(
     ],
     entry_points={
      'sqlalchemy.dialects': [
-          'sphinx = sqlalchemy-sphinxql-connector.mysqldb:Dialect',
-          'sphinx.cymysql = sqlalchemy-sphinxql-connector.cymysql:Dialect',
-          'sphinx.mysqldb = sqlalchemy-sphinxql-connector.mysqldb:Dialect'
+          'sphinx = sqlalchemy_sphinxql_connector.mysqldb:Dialect',
+          'sphinx.cymysql = sqlalchemy_sphinxql_connector.cymysql:Dialect',
+          'sphinx.mysqldb = sqlalchemy_sphinxql_connector.mysqldb:Dialect'
           ]
     }
 )

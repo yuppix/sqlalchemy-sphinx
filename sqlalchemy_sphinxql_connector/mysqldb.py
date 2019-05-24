@@ -2,7 +2,7 @@
 
 import MySQLdb
 from sqlalchemy.dialects.mysql import mysqldb as mysqldb_dialect
-from sqlalchemy-sphinxql-connector.dialect import SphinxDialect
+from sqlalchemy_sphinxql_connector.dialect import SphinxDialect
 
 __all__ = ("Dialect",)
 
